@@ -1,13 +1,14 @@
 package com.heindrich.recipeapp.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 @ToString(exclude = "recipe")
 @EqualsAndHashCode(exclude = "recipe")
 @Entity
