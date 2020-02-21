@@ -1,13 +1,19 @@
 package com.heindrich.recipeapp.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
+@EqualsAndHashCode
 @Entity
+@Builder
 public class Recipe {
 
     @Id

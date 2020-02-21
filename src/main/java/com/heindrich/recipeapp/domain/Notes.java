@@ -1,15 +1,17 @@
 package com.heindrich.recipeapp.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 @ToString(exclude = "recipe")
 @EqualsAndHashCode(exclude = "recipe")
 @Entity
+@Builder
 public class Notes {
 
     @Id

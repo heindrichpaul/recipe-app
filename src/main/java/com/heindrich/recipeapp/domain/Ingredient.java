@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @ToString(exclude = "recipe")
 @EqualsAndHashCode(exclude = "recipe")
 @Entity
+@Builder
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
