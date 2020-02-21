@@ -30,10 +30,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe findById(Long l) {
         Optional<Recipe> recipe = recipeRepository.findById(l);
-        if (recipe.isPresent()) {
-            return recipe.get();
-        }
-
-        return null;
+        return recipe.orElse(null);
     }
 }
