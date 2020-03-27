@@ -34,15 +34,11 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
 
         Set<CategoryCommand> categories = new HashSet<>();
         source.getCategories()
-                .forEach(c -> {
-                    categories.add(categoryConverter.convert(c));
-                });
+                .forEach(c -> categories.add(categoryConverter.convert(c)));
 
         Set<IngredientCommand> ingredients = new HashSet<>();
         source.getIngredients()
-                .forEach(i -> {
-                    ingredients.add(ingredientConverter.convert(i));
-                });
+                .forEach(i -> ingredients.add(ingredientConverter.convert(i)));
 
 
         return RecipeCommand.builder()

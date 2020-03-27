@@ -20,6 +20,7 @@ public class BootStrap implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
+    private static final String EXCEPTION_STRING = "Expected UOM Not Found";
 
     public BootStrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
@@ -41,37 +42,37 @@ public class BootStrap implements CommandLineRunner {
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
 
         if (!eachUomOptional.isPresent()) {
-            throw new RuntimeException("Expected UOM Not Found");
+            throw new RuntimeException(EXCEPTION_STRING);
         }
 
         Optional<UnitOfMeasure> tableSpoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
         if (!tableSpoonUomOptional.isPresent()) {
-            throw new RuntimeException("Expected UOM Not Found");
+            throw new RuntimeException(EXCEPTION_STRING);
         }
 
         Optional<UnitOfMeasure> teaSpoonUomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
 
         if (!teaSpoonUomOptional.isPresent()) {
-            throw new RuntimeException("Expected UOM Not Found");
+            throw new RuntimeException(EXCEPTION_STRING);
         }
 
         Optional<UnitOfMeasure> dashUomOptional = unitOfMeasureRepository.findByDescription("Dash");
 
         if (!dashUomOptional.isPresent()) {
-            throw new RuntimeException("Expected UOM Not Found");
+            throw new RuntimeException(EXCEPTION_STRING);
         }
 
         Optional<UnitOfMeasure> pintUomOptional = unitOfMeasureRepository.findByDescription("Pint");
 
         if (!pintUomOptional.isPresent()) {
-            throw new RuntimeException("Expected UOM Not Found");
+            throw new RuntimeException(EXCEPTION_STRING);
         }
 
         Optional<UnitOfMeasure> cupsUomOptional = unitOfMeasureRepository.findByDescription("Cup");
 
         if (!cupsUomOptional.isPresent()) {
-            throw new RuntimeException("Expected UOM Not Found");
+            throw new RuntimeException(EXCEPTION_STRING);
         }
 
         //get optionals
