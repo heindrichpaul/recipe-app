@@ -1,6 +1,8 @@
 package com.heindrich.recipeapp.controllers;
 
+import com.heindrich.recipeapp.commands.IngredientCommand;
 import com.heindrich.recipeapp.commands.RecipeCommand;
+import com.heindrich.recipeapp.services.IngredientService;
 import com.heindrich.recipeapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class IngredientControllerTest {
 
+    @Mock
+    IngredientService ingredientService;
     @Mock
     RecipeService recipeService;
 
@@ -47,8 +51,21 @@ class IngredientControllerTest {
 
         //then
         verify(recipeService, times(1)).findCommandById(anyLong());
+    }
 
+    @Test
+    public void testShowIngredients() throws Exception {
+        //given
+        IngredientCommand ingredientCommand = new IngredientCommand();
 
+        //when
+        when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(ingredientCommand);
+
+        //then
+        mockMvc.perform(get("/recipe/1/ingredient/2/show"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/show"))
+                .andExpect(model().attributeExists("ingredient"));
     }
 
 }

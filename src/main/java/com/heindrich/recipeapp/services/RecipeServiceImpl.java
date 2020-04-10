@@ -1,11 +1,10 @@
 package com.heindrich.recipeapp.services;
 
 import com.heindrich.recipeapp.commands.RecipeCommand;
-import com.heindrich.recipeapp.converters.RecipeCommandToRecipe;
-import com.heindrich.recipeapp.converters.RecipeToRecipeCommand;
 import com.heindrich.recipeapp.domain.Recipe;
 import com.heindrich.recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +16,11 @@ import java.util.Set;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
-    private final RecipeCommandToRecipe recipeCommandToRecipe;
-    private final RecipeToRecipeCommand recipeToRecipeCommand;
+    private final ConversionService conversionService;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, ConversionService conversionService) {
         this.recipeRepository = recipeRepository;
-        this.recipeCommandToRecipe = recipeCommandToRecipe;
-        this.recipeToRecipeCommand = recipeToRecipeCommand;
+        this.conversionService = conversionService;
     }
 
     @Override
@@ -44,15 +41,15 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand command) {
-        Recipe recipe = recipeCommandToRecipe.convert(command);
-        return recipeToRecipeCommand.convert(recipeRepository.save(recipe));
+        Recipe recipe = conversionService.convert(command, Recipe.class);
+        return conversionService.convert(recipeRepository.save(recipe), RecipeCommand.class);
     }
 
     @Override
     @Transactional
     public RecipeCommand findCommandById(Long l) {
         Optional<Recipe> recipe = recipeRepository.findById(l);
-        return recipeToRecipeCommand.convert(recipe.orElse(null));
+        return conversionService.convert(recipe.orElse(null), RecipeCommand.class);
     }
 
     @Override

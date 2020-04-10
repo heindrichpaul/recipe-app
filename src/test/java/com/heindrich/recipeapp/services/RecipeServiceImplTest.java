@@ -1,13 +1,13 @@
 package com.heindrich.recipeapp.services;
 
-import com.heindrich.recipeapp.converters.RecipeCommandToRecipe;
-import com.heindrich.recipeapp.converters.RecipeToRecipeCommand;
 import com.heindrich.recipeapp.domain.Recipe;
 import com.heindrich.recipeapp.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.convert.ConversionService;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -20,6 +20,7 @@ import static org.springframework.test.util.AssertionErrors.assertNotNull;
 /**
  * Created by jt on 6/17/17.
  */
+@ExtendWith(MockitoExtension.class)
 public class RecipeServiceImplTest {
 
     RecipeServiceImpl recipeService;
@@ -28,20 +29,16 @@ public class RecipeServiceImplTest {
     RecipeRepository recipeRepository;
 
     @Mock
-    RecipeToRecipeCommand recipeToRecipeCommand;
+    ConversionService conversionService;
 
-    @Mock
-    RecipeCommandToRecipe recipeCommandToRecipe;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-
-        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
+    public void setUp() {
+        recipeService = new RecipeServiceImpl(recipeRepository, conversionService);
     }
 
     @Test
-    public void getRecipeByIdTest() throws Exception {
+    public void getRecipeByIdTest() {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -56,7 +53,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void getRecipesTest() throws Exception {
+    public void getRecipesTest() {
 
         Recipe recipe = new Recipe();
         HashSet receipesData = new HashSet();
@@ -72,7 +69,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void testDeleteById() throws Exception {
+    public void testDeleteById() {
         Long idToDelete = 2L;
         recipeService.deleteById(idToDelete);
 
