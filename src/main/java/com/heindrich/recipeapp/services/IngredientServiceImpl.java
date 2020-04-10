@@ -75,7 +75,7 @@ public class IngredientServiceImpl implements IngredientService {
 
             Recipe savedRecipe = recipeRepository.save(recipe);
 
-            //to do check for fail
+            //todo check for fail
             Optional<Ingredient> ingredientOptional1 = savedRecipe.getIngredients().stream()
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
                     .findFirst();
@@ -87,6 +87,7 @@ public class IngredientServiceImpl implements IngredientService {
         } else {
             log.error("Recipe not found for id: " + command.getRecipeId());
             return new IngredientCommand();
+            //todo return error if not found
         }
     }
 }
