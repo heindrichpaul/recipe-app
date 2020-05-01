@@ -29,10 +29,11 @@ public class ImageServiceImpl implements ImageService {
                 bytesObjects[i] = file.getBytes()[i];
             }
 
-            recipe.ifPresent(r -> {
+            if (recipe.isPresent()) {
+                Recipe r = recipe.get();
                 r.setImage(bytesObjects);
                 recipeRepository.save(r);
-            });
+            }
 
             log.debug("Received a file");
         } catch (IOException e) {

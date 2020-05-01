@@ -48,6 +48,7 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
                 .difficulty(source.getDifficulty())
                 .directions(source.getDirections())
                 .id(source.getId())
+                .image(source.getImage())
                 .ingredients(ingredients)
                 .notes(notesConverter.convert(source.getNotes()))
                 .prepTime(source.getPrepTime())
