@@ -32,7 +32,7 @@ public class Recipe {
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
     @Lob//BLOB
-    private byte[] image;
+    private Byte[] image;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL)
