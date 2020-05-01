@@ -51,7 +51,7 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
                 .ingredients(ingredients)
                 .notes(notesConverter.convert(source.getNotes()))
                 .prepTime(source.getPrepTime())
-                .serving(source.getServing())
+                .servings(source.getServings())
                 .source(source.getSource())
                 .url(source.getUrl())
                 .build();

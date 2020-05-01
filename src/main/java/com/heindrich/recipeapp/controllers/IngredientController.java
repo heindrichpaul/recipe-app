@@ -1,6 +1,8 @@
 package com.heindrich.recipeapp.controllers;
 
 import com.heindrich.recipeapp.commands.IngredientCommand;
+import com.heindrich.recipeapp.commands.RecipeCommand;
+import com.heindrich.recipeapp.commands.UnitOfMeasureCommand;
 import com.heindrich.recipeapp.services.IngredientService;
 import com.heindrich.recipeapp.services.RecipeService;
 import com.heindrich.recipeapp.services.UnitOfMeasureService;
@@ -46,6 +48,25 @@ public class IngredientController {
         return "recipe/ingredient/show";
     }
 
+    @GetMapping("recipe/{recipeId}/ingredient/new")
+    public String createIngredient(@PathVariable String recipeId, Model model) {
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        //todo raise exception if null
+
+        //Create new ingredient
+        IngredientCommand ingredientCommand = IngredientCommand.builder().recipeId(recipeCommand.getId()).unitOfMeasure(UnitOfMeasureCommand.builder().build()).build();
+        model.addAttribute("ingredient", ingredientCommand);
+
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping("recipe/{recipeId}/ingredient/{id}/delete")
+    public String createIngredient(@PathVariable String recipeId, @PathVariable String id, Model model) {
+        ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+        return "redirect:/recipe/" + recipeId + "/ingredients";
+    }
+
     @GetMapping("recipe/{recipeId}/ingredient/{id}/update")
     public String updateRecipeIngredient(@PathVariable String recipeId,
                                          @PathVariable String id, Model model) {
@@ -64,4 +85,6 @@ public class IngredientController {
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
     }
+
+
 }

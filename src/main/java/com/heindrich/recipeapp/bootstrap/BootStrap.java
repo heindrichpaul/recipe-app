@@ -143,7 +143,7 @@ public class BootStrap implements CommandLineRunner {
         guacRecipe.getCategories().add(mexicanCategory);
 
         guacRecipe.setUrl("http://www.simplyrecipes.com/recipes/perfect_guacamole/");
-        guacRecipe.setServing(4);
+        guacRecipe.setServings(4);
         guacRecipe.setSource("Simply Recipes");
 
         //add to return list
@@ -205,7 +205,7 @@ public class BootStrap implements CommandLineRunner {
         tacosRecipe.getCategories().add(mexicanCategory);
 
         tacosRecipe.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
-        tacosRecipe.setServing(4);
+        tacosRecipe.setServings(4);
         tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);

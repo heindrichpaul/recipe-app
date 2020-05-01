@@ -53,7 +53,7 @@ public class IngredientServiceImplTest {
         ingredient1.setId(1L);
 
         Ingredient ingredient2 = new Ingredient();
-        ingredient2.setId(1L);
+        ingredient2.setId(2L);
 
         Ingredient ingredient3 = new Ingredient();
         ingredient3.setId(3L);
@@ -104,5 +104,37 @@ public class IngredientServiceImplTest {
         verify(conversionService, times(1)).convert(any(Ingredient.class), any());
         verify(conversionService, times(1)).convert(any(IngredientCommand.class), any());
 
+    }
+
+
+    @Test
+    public void deleteByRecipeIdAndRecipeIdHappyPath() throws Exception {
+        //given
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        Ingredient ingredient1 = new Ingredient();
+        ingredient1.setId(1L);
+
+        Ingredient ingredient2 = new Ingredient();
+        ingredient2.setId(2L);
+
+        Ingredient ingredient3 = new Ingredient();
+        ingredient3.setId(3L);
+
+        recipe.addIngredient(ingredient1);
+        recipe.addIngredient(ingredient2);
+        recipe.addIngredient(ingredient3);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        //then
+        ingredientService.deleteById(1L, 3L);
+
+        //when
+        assertEquals(2, recipe.getIngredients().size());
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
     }
 }
