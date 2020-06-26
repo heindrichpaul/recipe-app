@@ -2,6 +2,7 @@ package com.heindrich.recipeapp.controllers;
 
 import com.heindrich.recipeapp.commands.RecipeCommand;
 import com.heindrich.recipeapp.domain.Recipe;
+import com.heindrich.recipeapp.exceptions.NotFoundException;
 import com.heindrich.recipeapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ class RecipeControllerTest {
 
     RecipeController controller;
     MockMvc mockMvc;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -97,5 +99,14 @@ class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void getRecipeByIdTestNotFound() throws Exception {
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 }

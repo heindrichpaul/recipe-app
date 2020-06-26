@@ -2,6 +2,7 @@ package com.heindrich.recipeapp.services;
 
 import com.heindrich.recipeapp.commands.RecipeCommand;
 import com.heindrich.recipeapp.domain.Recipe;
+import com.heindrich.recipeapp.exceptions.NotFoundException;
 import com.heindrich.recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -35,7 +36,10 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe findById(Long l) {
         Optional<Recipe> recipe = recipeRepository.findById(l);
-        return recipe.orElse(null);
+        if (!recipe.isPresent()) {
+            throw new NotFoundException("Recipe Not Found");
+        }
+        return recipe.get();
     }
 
     @Override
